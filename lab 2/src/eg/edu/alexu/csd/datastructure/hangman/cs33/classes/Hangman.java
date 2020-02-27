@@ -2,7 +2,7 @@ package eg.edu.alexu.csd.datastructure.hangman.cs33.classes;
 import eg.edu.alexu.csd.datastructure.hangman.cs33.Interfaces.IHangman;
 import java.io.*;
 import java.util.*;
-public class hangman implements IHangman {
+public class Hangman implements IHangman {
 	static String[] dictionary;
 	private static int size;
 	static String playingword="";
