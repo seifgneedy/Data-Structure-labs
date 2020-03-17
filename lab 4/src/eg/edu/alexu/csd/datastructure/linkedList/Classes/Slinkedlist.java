@@ -29,6 +29,9 @@ public class Slinkedlist implements ILinkedList{
     	tail=null;
     	size=0;
     }
+    public int length() {
+    	return size;
+    }
 	@Override
 	//index starts from zero as usual
 	public void add(int index, Object element) {

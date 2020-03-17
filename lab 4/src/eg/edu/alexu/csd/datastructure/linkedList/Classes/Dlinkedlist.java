@@ -186,6 +186,9 @@ public class Dlinkedlist implements ILinkedList {
 			return list;
 		}
 	}
+	public int length() {
+		return size;
+	}
 
 	@Override
 	public boolean contains(Object o) {
