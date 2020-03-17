@@ -186,7 +186,7 @@ public class Dlinkedlist implements ILinkedList {
 			return list;
 		}
 	}
-	public int length() {
+	public int size() {
 		return size;
 	}
 

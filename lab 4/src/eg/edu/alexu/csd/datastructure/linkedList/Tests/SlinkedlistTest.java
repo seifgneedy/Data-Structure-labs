@@ -12,7 +12,7 @@ class SlinkedlistTest {
 		list.add(3);
 		list.add(4);
 		list.add(5);
-		for(int i=0;i<list.length();i++) {
+		for(int i=0;i<list.size();i++) {
 			assertEquals(list.get(i), arr[i]);
 		}
 	}
@@ -33,7 +33,7 @@ class SlinkedlistTest {
 		list.add(5,15);
 		list.add(3,5);
 		int[] arr= {5,1,10,5,2,3,15};
-		for(int i=0;i<list.length();i++) {
+		for(int i=0;i<list.size();i++) {
 			assertEquals(list.get(i), arr[i]);
 		}
 	}
@@ -50,7 +50,7 @@ class SlinkedlistTest {
 		list.remove(1);
 		list.add(0,3);
 		int[] arr= {3,5,15,10};
-		for(int i=0;i<list.length();i++) {
+		for(int i=0;i<list.size();i++) {
 			assertEquals(list.get(i), arr[i]);
 		}
 	}
@@ -71,7 +71,7 @@ class SlinkedlistTest {
 		list.set(1, 4);
 		list.add(5);
 		list.set(4, 20);
-		for(int i=0;i<list.length();i++) 
+		for(int i=0;i<list.size();i++) 
 			assertEquals(list.get(i), arr[i]);
 	}
 	@Test
@@ -110,7 +110,7 @@ class SlinkedlistTest {
 		list.add(4);
 		list.add(5);
 		test=(Slinkedlist) list.sublist(2, 4);
-		for(int i=0;i<test.length();i++) {
+		for(int i=0;i<test.size();i++) {
 			assertEquals(test.get(i), arr[i]);
 		}
 	}

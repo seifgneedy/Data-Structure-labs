@@ -6,6 +6,7 @@ public interface ILinkedList {
 	public Object get(int index);
 	public void set(int index, Object element);
 	public void clear();
+	public int size();
 	public boolean isEmpty();
 	public void remove(int index);
 	public ILinkedList sublist(int fromIndex, int toIndex);

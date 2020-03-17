@@ -29,7 +29,7 @@ public class Slinkedlist implements ILinkedList{
     	tail=null;
     	size=0;
     }
-    public int length() {
+    public int size() {
     	return size;
     }
 	@Override
