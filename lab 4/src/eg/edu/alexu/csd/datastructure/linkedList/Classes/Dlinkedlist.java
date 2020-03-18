@@ -1,25 +1,28 @@
 package eg.edu.alexu.csd.datastructure.linkedList.Classes;
 import eg.edu.alexu.csd.datastructure.linkedList.Interfaces.ILinkedList;
 public class Dlinkedlist implements ILinkedList {
-	private static class DNode{
-		private DNode next;
-		private DNode prev;
+	private static class Node{
+		private Node next;
+		private Node prev;
 		private Object element;
-		public DNode(Object element,DNode next,DNode prev) {
+		public Node() {
+			
+		}
+		public Node(Object element,Node next,Node prev) {
 			this.element=element;
 			this.next=next;
 			this.prev=prev;
 		}
-		public DNode getNext() {
+		public Node getNext() {
 			return next;
 		}
-		public void setNext(DNode next) {
+		public void setNext(Node next) {
 			this.next = next;
 		}
-		public DNode getPrev() {
+		public Node getPrev() {
 			return prev;
 		}
-		public void setPrev(DNode prev) {
+		public void setPrev(Node prev) {
 			this.prev = prev;
 		}
 		public Object getElement() {
@@ -30,36 +33,36 @@ public class Dlinkedlist implements ILinkedList {
 		}
 	}
 	private int size;
-	DNode header,trailer;
+	Node header,trailer;
 	public Dlinkedlist() {
-		header=new DNode(null,trailer,null);
-		trailer=new DNode(null,null,header);
+		header=new Node();
+		trailer=new Node(null,null,header);
+		header.setNext(trailer);
 		size=0;
 	}
 	@Override
 	public void add(int index, Object element) {
-		if(index>size||index<0) {
+		if(index>size||index<0)
 			throw new IndexOutOfBoundsException();
-			}
 		else if (index==0) {
-				DNode p=new DNode(element,header.getNext(),header);		
+				Node p=new Node(element,header.getNext(),header);		
 				if(size==0)
 					trailer.setPrev(p);
 				else {
-				DNode q=header.getNext();
-				q.setPrev(p);
+					Node q=header.getNext();
+					q.setPrev(p);
 				}
 				header.setNext(p);
 				size++;
-			}
+		}
 		else if(index==size)
 			add(element);
 		else {
-			DNode prev=header;
-			for(int i=0;i<index;i++)
+			Node prev=header;
+			while(index-- > 0)
 				prev=prev.getNext();
-			DNode next=prev.getNext();
-			DNode current=new DNode(element,next,prev);
+			Node next=prev.getNext();
+			Node current=new Node(element,next,prev);
 			prev.setNext(current);
 			next.setPrev(current);
 			size++;
@@ -68,8 +71,8 @@ public class Dlinkedlist implements ILinkedList {
 
 	@Override
 	public void add(Object element) {
-		DNode prev=trailer.getPrev();
-		DNode current=new DNode(element,trailer,prev);
+		Node prev=trailer.getPrev();
+		Node current=new Node(element,trailer,prev);
 		prev.setNext(current);
 		trailer.setPrev(current);
 		size++;
@@ -77,18 +80,17 @@ public class Dlinkedlist implements ILinkedList {
 
 	@Override
 	public Object get(int index) {
-		if(index>=size||index<0) {
+		if(index>=size||index<0)
 			throw new IndexOutOfBoundsException();
-			}
 		else {
 			if (index>size/2) {
-				DNode p=trailer.getPrev();
+				Node p=trailer.getPrev();
 				for(int i=size;i>index+1;i--) 
 					p=p.getPrev();
 				return p.getElement();
 			}
 			else {
-				DNode p=header.getNext();
+				Node p=header.getNext();
 				for(int i=0;i<=index-1;i++)
 					p=p.getNext();
 				return p.getElement();
@@ -98,18 +100,17 @@ public class Dlinkedlist implements ILinkedList {
 
 	@Override
 	public void set(int index, Object element) {
-		if(index>=size||index<0) {
+		if(index>=size||index<0)
 			throw new IndexOutOfBoundsException();
-			}
 		else {
 			if (index>size/2) {
-				DNode p=trailer;
+				Node p=trailer;
 				for(int i=size;i>index;i--) 
 					p=p.getPrev();
 				p.setElement(element);
 			}
 			else {
-				DNode p=header;
+				Node p=header;
 				for(int i=0;i<=index;i++)
 					p=p.getNext();
 				p.setElement(element);
@@ -118,65 +119,51 @@ public class Dlinkedlist implements ILinkedList {
 	}
 	@Override
 	public void clear() {
-		while(header.getNext()!=trailer)
-			remove(0);
+		header.setNext(trailer);
 		trailer.setPrev(header);
 		size=0;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return (size==0);
+		return size==0;
 	}
 
 	@Override
 	public void remove(int index) {
-		if(index>=size||index<0) {
+		if(index>=size||index<0)
 			throw new IndexOutOfBoundsException();
-			}
 		else {
 			if (index==0) {
-				DNode p=header.getNext();
-				DNode q=p.getNext();
+				Node q=header.getNext().getNext();
 				header.setNext(q);
 				q.setPrev(header);
-				if (size==1) trailer=q;
-				p.setNext(null);
-				p.setPrev(null);
 			}
 			else if(index==size-1) {
-				DNode p=trailer.getPrev();
-				DNode q=p.getPrev();
+				Node q=trailer.getPrev().getPrev();
 				q.setNext(trailer);
 				trailer.setPrev(q);
-				p.setNext(null);
-				p.setPrev(null);
 			}
 			else {
-				DNode current=header.getNext();
-				for(int i=0;i<index;i++)
-					current=current.getNext();
-				DNode next=current.getNext();
-				DNode prev=current.getPrev();
-				current.setNext(null);
-				current.setPrev(null);
+				Node prev=header.getNext();
+				for(int i=1;i<index;i++)
+					prev=prev.getNext();
+				Node next=prev.getNext().getNext();
 				prev.setNext(next);
 				next.setPrev(prev);
 				}
 			size--;
 			}
 			
-		}
-	
+	}
 
 	@Override
 	public ILinkedList sublist(int fromIndex, int toIndex) {
 		Dlinkedlist list =new Dlinkedlist();
-		if (fromIndex>=size||toIndex>=size||fromIndex<0||toIndex<0) {
+		if (fromIndex>=size||toIndex>=size||fromIndex<0||toIndex<0)
 			throw new IndexOutOfBoundsException();			
-		}
 		else {
-			DNode p=header.getNext();
+			Node p=header.getNext();
 			for(int i=0;i<fromIndex;i++)
 				p=p.getNext();
 			for(int i=fromIndex;i<=toIndex;i++) {
@@ -186,17 +173,18 @@ public class Dlinkedlist implements ILinkedList {
 			return list;
 		}
 	}
+	@Override
 	public int size() {
 		return size;
 	}
 
 	@Override
 	public boolean contains(Object o) {
-		DNode p=header.getNext();
+		Node p=header.getNext();
 		while(p!=trailer) {
-		if (p.getElement().equals(o))
-			return true;
-		p=p.getNext();
+			if (p.getElement().equals(o))
+				return true;
+			p=p.getNext();
 		}
 		return false;
 	}
