@@ -12,7 +12,7 @@ import eg.edu.alexu.csd.datastructure.stack.Interfaces.IExpressionEvaluator;
 public class Evaluator implements IExpressionEvaluator {
 	/**
 	 * this method is used to check the parentheses in the expression and some other conditions like empty one ()
-	 * @param expression
+	 * @param expression the expression to check
 	 * @return true if the paretheses in the expression is good and false otherwise
 	 * 
 	 */
@@ -60,7 +60,7 @@ public class Evaluator implements IExpressionEvaluator {
 	}
 	/**
 	 * this method is used to check the operators and make sure that this is not any invalid input in it like 5+++5 or the things like that
-	 * @param expression
+	 * @param expression the expression to check
 	 * @return true if the operators is correct and in their right way and false if not
 	 */
 	public static boolean operatorcheck(String expression) {
@@ -89,7 +89,7 @@ public class Evaluator implements IExpressionEvaluator {
 	 * 	this method is split into 2 parts, the first one as we assume that the entered expression don't have any spaces
 	 * so it put spaces in their right place to prepare it to the split method in the second part 
 	 * and in the second part we take the negative input (assume"-a") and add dummy zero ("(0-a)"
-	 * @param ex
+	 * @param ex the expression to add dummy
 	 * @return input string after adding dummy zero 
 	 */
 	public static String addDummy(String ex) {
@@ -190,7 +190,7 @@ public class Evaluator implements IExpressionEvaluator {
 	/**
 	 * this method is used to check the postfix expression inputed in evaluate method and make sure that number of operators is bigger than number of numbers by 1 .
 	 * @param str the terms of the expression stored in array of Strings
-	 * @return
+	 * @return true if the expression is correct and false other wise
 	 */
 	public static boolean checkpostfix(String [] str) {
 		int numcount=0,opcount=0;
