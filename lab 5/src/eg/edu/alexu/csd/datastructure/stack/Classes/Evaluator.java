@@ -115,46 +115,41 @@ public class Evaluator implements IExpressionEvaluator {
 		}
 		return result;
 		}
+	public static int precedence(char ch) {
+		if (ch=='+'||ch=='-')
+			return 1;
+		else if(ch=='*'||ch=='/')
+			return 2;
+		return 0;
+	}
 	@Override
 	public String infixToPostfix(String expression) {
-		expression=expression.replaceAll("\\s+", "");
 		expression=addDummy(expression);
 		if (!parencheck(expression)||!operatorcheck(expression)||expression.length()<3)
-			throw new InputMismatchException();
+			throw new InputMismatchException("Invalid input");
 		Stack operator = new Stack();
 		String result="";
 		int n=expression.length();
 		for(int i=0;i<n;i++) {
 			char ch=expression.charAt(i);
-			if(ch=='*'||ch=='/') {
+			if (precedence(ch)>0) {
 				result+=" ";
-				if(!operator.isEmpty()) {
-					char top=(char)operator.peek();
-					if(top=='*'||top=='/') {
-						
-						result+=operator.pop()+" ";
-					}
+				while(!operator.isEmpty()&&precedence((char)operator.peek())>=precedence(ch)) {
+					result+=operator.pop()+" ";
 				}
 				operator.push(ch);
 			}
-			else if(ch=='-'||ch=='+') {
-				result+=" ";
-					while(!operator.isEmpty()&&((char)operator.peek())!='(') {
-						result+=operator.pop()+" ";
-					}	
-				operator.push(ch);
-			}
-			else if(ch=='(') 
+			else if(ch=='(')
 				operator.push(ch);
 			else if(ch==')') {
-				while(((char)operator.peek())!='(') {
-				result+=" "+operator.pop();
+				char top=(char)operator.pop();
+				while(top!='(') {
+					result+=" "+top;
+					top=(char)operator.pop();
 				}
-				operator.pop();
 			}
-			else {
+			else
 				result+=ch;
-			}
 		}
 		while(!operator.isEmpty()) 
 			result+=" "+operator.pop();
@@ -165,7 +160,7 @@ public class Evaluator implements IExpressionEvaluator {
 		Stack nums=new Stack();
 		String[] str = expression.trim().split("\\s+");
 		if(!checkpostfix(str))
-			throw new InputMismatchException();
+			throw new InputMismatchException("Invalid input");
 		for(int i=0;i<str.length;i++) {
 			char ch=str[i].charAt(0);
 			if(str[i].length()==1&&(ch=='+'||ch=='-'||ch=='*'||ch=='/')) {
